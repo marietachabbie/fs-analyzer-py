@@ -15,9 +15,20 @@ Example:
 
 import os
 from analyzer.traversal import traverse_directory
+from analyzer.errors import DirectoryNotFoundError, InvalidThresholdError
 
 def find_large_files(directory, size_threshold):
     """Finds files larger than the specified size threshold."""
+    if not os.path.isdir(directory):
+        raise DirectoryNotFoundError(
+            f"The specified directory '{directory}' does not exist or is not a directory."
+        )
+
+    if size_threshold <= 0:
+        raise InvalidThresholdError(
+          "The size threshold must be a positive integer."
+        )
+
     large_files = []
     for file_path in traverse_directory(directory):
         if os.path.getsize(file_path) > size_threshold:

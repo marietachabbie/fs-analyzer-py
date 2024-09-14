@@ -17,9 +17,15 @@ Example:
 import os
 import stat
 from analyzer.traversal import traverse_directory
+from analyzer.errors import DirectoryNotFoundError
 
 def check_permissions(directory):
     """Finds files with world-writable permissions."""
+    if not os.path.isdir(directory):
+        raise DirectoryNotFoundError(
+          f"The specified directory '{directory}' does not exist or is not a directory."
+        )
+
     unusual_permissions = []
     for file_path in traverse_directory(directory):
         st = os.stat(file_path)

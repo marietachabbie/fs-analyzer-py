@@ -22,6 +22,7 @@ import argparse
 from analyzer.size_analysis import calculate_size
 from analyzer.permissions import check_permissions
 from analyzer.large_files import find_large_files
+from analyzer.errors import DirectoryNotFoundError, InvalidThresholdError
 
 def main():
     """Parses command-line arguments and performs file system analysis.
@@ -41,10 +42,24 @@ def main():
     directory = args.directory
     size_threshold = args.size_threshold
 
-    # Call functions here (size analysis, permissions check, etc.)
-    print("Size Analysis:", calculate_size(directory))
-    print("Files with Unusual Permissions:", check_permissions(directory))
-    print("Large Files:", find_large_files(directory, size_threshold))
+    try:
+        # Function calls (size analysis, permissions check, etc.)
+        sizes = calculate_size(directory)
+        unusual_permissions = check_permissions(directory)
+        large_files = find_large_files(directory, size_threshold)
+
+        # Print results
+        print("Size Analysis:", sizes)
+        print("Files with Unusual Permissions:", unusual_permissions)
+        print("Large Files:", large_files)
+    except (DirectoryNotFoundError, InvalidThresholdError) as e:
+        print(f"Error: {e}")
+        exit(1)
+
+    # pylint: disable=W0718:broad-exception-caught
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        exit(1)
 
 if __name__ == "__main__":
     main()
