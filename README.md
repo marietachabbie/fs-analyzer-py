@@ -39,3 +39,9 @@ options:
 ```sh
 python3 file_system_analyzer --help
 ```
+
+## Unit tests
+```
+# from root directory
+pytest
+```
