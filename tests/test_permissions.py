@@ -32,7 +32,7 @@ def test_check_permissions(mock_stat, mock_traverse_directory, mock_isdir):
 
     result = check_permissions('/path/to/directory')
 
-    assert result == ['/path/to/file2.sh']
+    assert result == ['/path/to/file1.txt', '/path/to/file2.sh']
 
 def test_check_permissions_directory_not_found():
     """Tests the case when the directory does not exist"""

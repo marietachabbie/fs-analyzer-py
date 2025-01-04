@@ -32,12 +32,8 @@ def test_find_large_files(mock_isdir, mock_traverse_directory, mock_getsize):
     mock_getsize.side_effect = [500000, 2000000]
 
     result = find_large_files('/path/to/directory', 1000000)
-
-    print("Mock isdir return value:", mock_isdir.return_value)
-    print("Mock isdir called with:", mock_isdir.call_args)
     mock_isdir.assert_called_with('/path/to/directory')
 
-    print("Result:", result)
     assert result == ['/path/to/file2.jpg']
 
 def test_find_large_files_directory_not_found():

@@ -36,7 +36,6 @@ def test_calculate_size(mock_getsize, mock_categorize_file, mock_traverse_direct
     mock_getsize.side_effect = [100, 200]
 
     result = calculate_size('/path/to/directory')
-    print("no")
 
     expected = {'text': 100, 'image': 200}
     assert result == expected

@@ -48,7 +48,6 @@ def main():
         unusual_permissions = check_permissions(directory)
         large_files = find_large_files(directory, size_threshold)
 
-        # Print results
         print("Size Analysis:", sizes)
         print("Files with Unusual Permissions:", unusual_permissions)
         print("Large Files:", large_files)
